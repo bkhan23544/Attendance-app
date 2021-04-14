@@ -1,0 +1,58 @@
+.home-2-bg {
+    background-color: #0e6cff;
+    position: relative;
+    background-size: cover;
+    height: 100vh;
+    background-position: center center;
+    background-image: url("../../assets/images/home-2-bg.png");
+}
+
+.home-2-title {
+    font-family: "Rubik", sans-serif;
+}
+
+.mover-img {
+    -webkit-animation: mover 1s infinite alternate;
+    animation: mover 1s infinite alternate;
+}
+
+.home-center {
+    display: table;
+    width: 100%;
+    height: 100%;
+}
+
+.home-desc-center {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.center {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.login-btn {
+    text-decoration: none !important;
+}
+
+@-webkit-keyframes mover {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-20px);
+    }
+}
+@keyframes mover {
+    0% {
+        transform: translateY(0);
+    }
+    100% {
+        transform: translateY(-20px);
+    }
+}

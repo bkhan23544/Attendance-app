@@ -1,0 +1,68 @@
+@import url("https://fonts.googleapis.com/css?family=Fira+Sans:400,500,600,700,800");
+
+body {
+  background: #1c8ef9 !important;
+  display: flex;
+  font-weight: 400;
+  font-family: "Fira Sans", sans-serif;
+}
+
+.signup-auth-inner {
+  max-width: 450px;
+  background: #ffffff;
+  margin: auto !important;
+  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
+  padding: 40px 25px 45px 25px;
+  border-radius: 15px;
+  transition: all 0.3s;
+  margin-top: 10vh !important;
+}
+
+@media (max-width: 450px) {
+  .signup-auth-inner {
+    max-width: 95%;
+  }
+}
+
+.signup-auth-inner h3 {
+  text-align: center;
+  margin: 0;
+  line-height: 1;
+  padding-bottom: 20px;
+}
+
+.forgot-password {
+  font-size: 16px;
+  color: #1c8ef9;
+  float: right;
+  margin-top: 10px;
+}
+
+.displayImg {
+  width: 100px;
+  height: 100px;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+.upload-btn {
+  background-color: #1c8ef9;
+  color: white;
+  padding: 10px;
+  border-radius: 4px;
+  margin-top: 20px;
+}
+
+.img-wrap {
+  display: inline-block;
+  position: relative;
+  width: 120px;
+  height: 100px;
+  margin-top: 10px;
+}
+.img-wrap .close {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  z-index: 100;
+}
