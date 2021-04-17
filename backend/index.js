@@ -269,7 +269,7 @@ app.post("/markattendance",(req,res)=>{
         WHERE NOT EXISTS (
             SELECT userID FROM ${tableName} WHERE userID = ${userID}
         ) LIMIT 1;`
-        let sqlData = [studentName,rollNo,userID,new Date().getHours()+":"+new Date().getMinutes()]
+        let sqlData = [studentName,rollNo,userID,new Date()]
         connection.query(sql, sqlData,(err,results)=>{
             if(err){
            return res.send(err)
@@ -322,6 +322,7 @@ app.post("/getattendance",(req,res)=>{
 
     var {classID,date} = req.body
     var tableName = "table"+classID+date
+    console.log(classID,date,"date")
 
     connection.query((`SELECT * FROM ${tableName}`),(err,results)=>{
         if(err){

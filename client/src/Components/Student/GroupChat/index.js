@@ -16,8 +16,6 @@ export default function GroupChat() {
   const [message, setMessage] = useState("")
   const [messages, setMessages] = useState([])
 
-  const dummy = useRef(null)
-
   //Join chat room for the user program
   useEffect(() => {
     setTimeout(() => {
@@ -36,7 +34,10 @@ export default function GroupChat() {
     getMessages()
     socket.on('new_message', message => {
       setMessages(messages => [...messages, message]);
-      dummy.current.scrollIntoView({ behavior: "smooth" });
+      var dummy = document.getElementById("dummy")
+      if(dummy){
+      dummy.scrollIntoView({ behavior: "smooth" });
+      }
     });
   }, [])
 
@@ -48,7 +49,10 @@ export default function GroupChat() {
       .then(function (response) {
         if (response.data.length > 0) {
           setMessages(response.data)
-          dummy.current.scrollIntoView({ behavior: "smooth" });
+          var dummy = document.getElementById("dummy")
+          if(dummy){
+          dummy.scrollIntoView({ behavior: "smooth" });
+        }
         }
       })
   }
@@ -96,8 +100,7 @@ export default function GroupChat() {
                     <div className="time">{v.timeStamp.slice(16, 24)}</div>
                   </div>
                 }
-                <div style={{ float: "left", clear: "both" }}
-                  ref={dummy}>
+                <div id="dummy" style={{ float: "left", clear: "both" }}>
                 </div>
               </>
             )

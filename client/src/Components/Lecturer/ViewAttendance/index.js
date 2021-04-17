@@ -16,6 +16,7 @@ import {
 export default function ViewAttendance({ showModal, toggle }) {
   const currentClass = useSelector(state => state.setCurrentClass)
   const [startDate, setStartDate] = useState(new Date());
+  const user = useSelector(state => state.setCurrentUser)
   const [error, setError] = useState("")
   const { saveAsCsv } = useJsonToCsv();
 
@@ -36,16 +37,26 @@ export default function ViewAttendance({ showModal, toggle }) {
           }
           else {
             setError("")
+            var data = response.data
+         
+            data.map((v)=>{
+              v.lecturer = user.firstName+" "+user.lastName
+              v.attendanceDate = formatDateForExcel(new Date())
+              v.time = v.timeStamp.substring(11,16)
+          })
+          console.log(data,"date")
             saveAsCsv(
               {
-                data: response.data,
+                data,
                 fields: {
                   "serialNo": "Serial No",
                   "studentName": "Student Name",
                   "rollNo": "Roll No",
-                  "timeStamp": "Time"
+                  "time": "Sign In Time",
+                  "lecturer":"Lecturer",
+                  "attendanceDate":"Date"
                 },
-                filename: "Attendance" + " " + reqDate
+                filename: "Attendance" + " " + currentClass.classId + reqDate
               }
             )
           }
@@ -66,15 +77,26 @@ export default function ViewAttendance({ showModal, toggle }) {
           }
           else {
             setError("")
+            var data = response.data
+         
+            data.map((v)=>{
+              v.lecturer = user.firstName+" "+user.lastName
+              v.attendanceDate = formatDateForExcel(startDate)
+              v.time = v.timeStamp.substring(11,16)
+          })
+          console.log(data,"date")
             saveAsCsv(
               {
-                data: response.data,
+                data,
                 fields: {
                   "serialNo": "Serial No",
                   "studentName": "Student Name",
-                  "rollNo": "Roll No"
+                  "rollNo": "Roll No",
+                  "time": "Sign In Time",
+                  "lecturer":"Lecturer",
+                  "attendanceDate":"Date"
                 },
-                filename: "Attendance" + " " + reqDate
+                filename: "Attendance" + " " + currentClass.classId + reqDate
               }
             )
           }
@@ -95,6 +117,21 @@ export default function ViewAttendance({ showModal, toggle }) {
       day = '0' + day;
 
     return `${day}${month}${year}`;
+  }
+
+   //Convert date in specific format for excel file
+  function formatDateForExcel(date) {
+    var d = new Date(date),
+      month = '' + (d.getMonth() + 1),
+      day = '' + d.getDate(),
+      year = d.getFullYear();
+
+    if (month.length < 2)
+      month = '0' + month;
+    if (day.length < 2)
+      day = '0' + day;
+
+    return `${day}-${month}-${year}`;
   }
 
   return (
