@@ -8,6 +8,9 @@ import Profile from '../Profile'
 import Navbar from "../Navbar";
 import './styles.scss'
 import ViewClass from "../ViewClass";
+import Alerts from '../Alerts'
+import ApplyForLeave from '../ApplyForLeave'
+import MyLeaveRequests from '../MyLeaveRequests'
 
 
 const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
@@ -30,6 +33,15 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
     else if (url == "/lecturerdashboard/viewclass") {
       setNavBaarTitle("View Class")
     }
+    else if (url == "/lecturerdashboard/alerts") {
+      setNavBaarTitle("Alerts")
+    }
+    else if (url == "/lecturerdashboard/applyforleave") {
+      setNavBaarTitle("Apply For Leave")
+    }
+    else if (url == "/lecturerdashboard/myleaverequests") {
+      setNavBaarTitle("My Leave Requests")
+    }
   })
 
   return (
@@ -43,6 +55,9 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
         <Route exact path="/lecturerdashboard/createclass" component={CreateClass} />
         <Route exact path="/lecturerdashboard/profile" component={Profile} />
         <Route exact path="/lecturerdashboard/viewclass" component={ViewClass} />
+        <Route exact path="/lecturerdashboard/alerts" component={() => <Alerts navBaarTitle={navBaarTitle} />} />
+        <Route exact path="/lecturerdashboard/applyforleave" component={ApplyForLeave} />
+        <Route exact path="/lecturerdashboard/myleaverequests" component={() => <MyLeaveRequests navBaarTitle={navBaarTitle} />} />
       </Switch>
     </Container>
   )

@@ -4,7 +4,9 @@ import {
   faBriefcase,
   faPlus,
   faUser,
-  faTimes
+  faTimes,
+  faBell,
+  faPaste
 } from "@fortawesome/free-solid-svg-icons";
 import { NavItem, NavLink, Nav } from "reactstrap";
 import classNames from "classnames";
@@ -39,6 +41,24 @@ const SideBar = ({ isOpen, toggle, setNavbarTitle }) => {
             <NavLink className="sidebar-nav-item" tag={Link} to={"/lecturerdashboard/profile"} onClick={() => { setNavbarTitle("Profile"); toggle() }}>
               <FontAwesomeIcon icon={faUser} className="mr-2" />
             Profile
+          </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink className="sidebar-nav-item" tag={Link} to={"/lecturerdashboard/alerts"} onClick={() => { setNavbarTitle("Alerts"); toggle() }}>
+              <FontAwesomeIcon icon={faBell} className="mr-2" />
+            Alerts
+          </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink className="sidebar-nav-item" tag={Link} to={"/lecturerdashboard/applyforleave"} onClick={() => { setNavbarTitle("Apply For Leave"); toggle() }}>
+              <FontAwesomeIcon icon={faPaste} className="mr-2" />
+            Apply For Leave
+          </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink className="sidebar-nav-item" tag={Link} to={"/lecturerdashboard/myleaverequests"} onClick={() => { setNavbarTitle("My Leave Requests"); toggle() }}>
+              <FontAwesomeIcon icon={faPaste} className="mr-2" />
+            My Leave Requests
           </NavLink>
           </NavItem>
           <NavItem>

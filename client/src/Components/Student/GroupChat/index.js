@@ -10,16 +10,19 @@ const ENDPOINT = 'localhost:5000';
 
 let socket;
 
-export default function GroupChat() {
+export default function GroupChat(props) {
   const user = useSelector(state => state.setCurrentUser)
   const [initialMessage, setInitialMessage] = useState(true)
   const [message, setMessage] = useState("")
   const [messages, setMessages] = useState([])
+  let componentMounted = true
 
   //Join chat room for the user program
   useEffect(() => {
     setTimeout(() => {
-      setInitialMessage(false)
+      if (componentMounted) {
+        setInitialMessage(false)
+      }
     }, 3000);
     socket = io(ENDPOINT);
     socket.emit('join', { room: user.programName }, (error) => {
@@ -27,19 +30,27 @@ export default function GroupChat() {
         console.log(error);
       }
     });
-  }, [])
+    return () => {
+      componentMounted = false
+    }
+  }, [props.navBaarTitle])
 
   //Get messages from database and get any new message that comes from socket and save it in state
   useEffect(() => {
     getMessages()
     socket.on('new_message', message => {
-      setMessages(messages => [...messages, message]);
+      if (componentMounted) {
+        setMessages(messages => [...messages, message]);
+      }
       var dummy = document.getElementById("dummy")
-      if(dummy){
-      dummy.scrollIntoView({ behavior: "smooth" });
+      if (dummy) {
+        dummy.scrollIntoView({ behavior: "smooth" });
       }
     });
-  }, [])
+    return () => {
+      componentMounted = false
+    }
+  }, [props.navBaarTitle])
 
   //Get messages from database
   const getMessages = () => {
@@ -48,25 +59,29 @@ export default function GroupChat() {
     })
       .then(function (response) {
         if (response.data.length > 0) {
-          setMessages(response.data)
+          if (componentMounted) {
+            setMessages(response.data)
+          }
           var dummy = document.getElementById("dummy")
-          if(dummy){
-          dummy.scrollIntoView({ behavior: "smooth" });
-        }
+          if (dummy) {
+            dummy.scrollIntoView({ behavior: "smooth" });
+          }
         }
       })
   }
 
   //send a message to chat
   const sendMessage = () => {
-    if (message) {
-      socket.emit('sendMessage', {
-        senderid: user.userid,
-        programName: user.programName,
-        message: message,
-        timeStamp: Date(),
-        userName: user.firstName + " " + user.lastName
-      }, () => setMessage(''));
+    if (componentMounted) {
+      if (message) {
+        socket.emit('sendMessage', {
+          senderid: user.userid,
+          programName: user.programName,
+          message: message,
+          timeStamp: Date(),
+          userName: user.firstName + " " + user.lastName
+        }, () => setMessage(''));
+      }
     }
   }
 
@@ -79,14 +94,14 @@ export default function GroupChat() {
           {messages.map((v, i) => {
             return (
               <>
-                {v.senderid === user.userid ? <div key={i} class="message-list me">
+                {v.senderid === user.userid ? <div key={i} className="message-list me">
 
-                  <div class="msg">
+                  <div className="msg">
                     <p className="text-right text-white">
                       {v.message}
                     </p>
                   </div>
-                  <div class="time">{v.timeStamp.slice(16, 24)}</div>
+                  <div className="time">{v.timeStamp.slice(16, 24)}</div>
                 </div>
                   :
                   <div key={i} className="message-list">
@@ -110,7 +125,7 @@ export default function GroupChat() {
         </div>
       </div>
       <div className="message-footer">
-        <input value={message} type="text" onChange={(e) => setMessage(e.target.value)} data-placeholder="Send a message to {0}" />
+        <input value={message} type="text" onChange={(e) => { if (componentMounted) { setMessage(e.target.value) } }} data-placeholder="Send a message to {0}" />
         <Button onClick={sendMessage} color="primary">Send</Button>
       </div>
     </>

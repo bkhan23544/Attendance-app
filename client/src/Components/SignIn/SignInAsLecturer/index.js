@@ -2,19 +2,21 @@
 import { Row, Col, Button, Alert } from 'reactstrap';
 import { Link, useHistory } from 'react-router-dom';
 import "./styles.scss"
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import firebase from '../../../config/firebase'
 import axios from "axios";
 
 
 export default function SignInAsLecturer() {
-  const [formData, setFormData] = useState({})
+  const [formData, setFormData] = useState({ email: "", password: "" })
   const [errors, setErrors] = useState([])
   const history = useHistory()
-
+  let componentMounted = true
   //save input changes in state
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value })
+    if (componentMounted) {
+      setFormData({ ...formData, [e.target.name]: e.target.value })
+    }
   }
 
   //Validate if all data is present and in correct format and then login.  
@@ -38,13 +40,21 @@ export default function SignInAsLecturer() {
         signIn()
       }
     }
-    setErrors(allErrors)
-    setTimeout(() => {
-      setErrors([])
-    }, 5000);
+    if (componentMounted) {
+      setErrors(allErrors)
+      setTimeout(() => {
+        setErrors([])
+      }, 5000);
+    }
   }
 
-  //Check if user exists and then login
+  useEffect(() => {
+    return () => {
+      componentMounted = false
+    }
+  }, [])
+
+  //Check if user exists and approved and not disabled and then login
   const signIn = () => {
 
     axios.post('http://localhost:5000/checkuser', {
@@ -64,21 +74,46 @@ export default function SignInAsLecturer() {
               var errorMessage = error.message;
               var allErrors = []
               allErrors.push(errorMessage)
-              setErrors(allErrors)
-              setTimeout(() => {
-                setErrors([])
-              }, 5000);
+              if (componentMounted) {
+                setErrors(allErrors)
+                setTimeout(() => {
+                  setErrors([])
+                }, 5000);
+              }
             });
 
         }
+        else if (response.data == "Not Approved") {
+          var allErrors = []
+          allErrors.push("This Account Hasn't Been Approved By Overseer Yet")
+          if (componentMounted) {
+            setErrors(allErrors)
+            setTimeout(() => {
+              setErrors([])
+            }, 5000);
+          }
+        }
 
+
+        else if (response.data == "disabled") {
+          var allErrors = []
+          allErrors.push("This Account Has Been Disabled By Overseer")
+          if (componentMounted) {
+            setErrors(allErrors)
+            setTimeout(() => {
+              setErrors([])
+            }, 5000);
+          }
+        }
         else {
           var allErrors = []
           allErrors.push("A lecturer account with this email doesn't exists")
-          setErrors(allErrors)
-          setTimeout(() => {
-            setErrors([])
-          }, 5000);
+          if (componentMounted) {
+            setErrors(allErrors)
+            setTimeout(() => {
+              setErrors([])
+            }, 5000);
+          }
         }
       })
 

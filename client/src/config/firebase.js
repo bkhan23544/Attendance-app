@@ -2,13 +2,13 @@
 //Configuration for firebase authentication
 import firebase from 'firebase'
 
-const firebaseConfig = {
-  apiKey: "AIzaSyBSY2wi8mBlaYaiAY6AOZKld7g5TAhpG_Y",
-  authDomain: "attendance-app-701f9.firebaseapp.com",
-  projectId: "attendance-app-701f9",
-  storageBucket: "attendance-app-701f9.appspot.com",
-  messagingSenderId: "823012443362",
-  appId: "1:823012443362:web:2a456b0951690b8ea10abb"
+var firebaseConfig = {
+  apiKey: "AIzaSyDmisQQVZmGTTDGgVT5Qpb9TvOFAsc1XV8",
+  authDomain: "attendance-app-4d754.firebaseapp.com",
+  projectId: "attendance-app-4d754",
+  storageBucket: "attendance-app-4d754.appspot.com",
+  messagingSenderId: "740949861929",
+  appId: "1:740949861929:web:68940f849bd0abef349e38"
 };
 
 firebase.initializeApp(firebaseConfig);

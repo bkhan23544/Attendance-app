@@ -9,10 +9,12 @@ import {
 import Home from './Components/Home'
 import SignInAsStudent from './Components/SignIn/SignInAsStudent'
 import SignInAsLecturer from './Components/SignIn/SignInAsLecturer'
+import SignInAsOverseer from './Components/SignIn/SignInAsOverseer'
 import ForgotPassword from './Components/ForgotPassword'
 import SignUp from './Components/Signup'
 import LecturerDashboard from './Components/Lecturer/Dashboard'
 import StudentDashboard from './Components/Student/Dashboard'
+import OverseerDashboard from './Components/Overseer/Dashboard'
 import { useState } from 'react';
 import { Provider } from 'react-redux'
 import store from './redux'
@@ -37,7 +39,7 @@ function PrivateRoute({ component: Component, authed, ...rest }) {
 function App(props) {
   const [studentAuthed, setStudentAuthed] = useState(false)
   const [lecturerAuthed, setLecturerAuthed] = useState(false)
-  const [adminAuthed, setAdminAuthed] = useState(false)
+  const [overseerAuthed, setOverseerAuthed] = useState(false)
   const history = useHistory
 
 
@@ -47,13 +49,16 @@ function App(props) {
       <Switch>
         <Provider store={store}>
           <Route exact path="/">
-            <Home setStudentAuthTrue={() => setStudentAuthed(true)} setLecturerAuthTrue={() => setLecturerAuthed(true)} />
+            <Home setStudentAuthTrue={() => setStudentAuthed(true)} setLecturerAuthTrue={() => setLecturerAuthed(true)} setOverseerAuthTrue={() => setOverseerAuthed(true)} />
           </Route>
           <Route exact path="/signinasstudent">
             <SignInAsStudent />
           </Route>
           <Route exact path="/signinaslecturer">
             <SignInAsLecturer />
+          </Route>
+          <Route exact path="/signinasoverseer">
+            <SignInAsOverseer />
           </Route>
           <Route exact path="/forgotpassword">
             <ForgotPassword />
@@ -63,6 +68,7 @@ function App(props) {
           </Route>
           <PrivateRoute authed={lecturerAuthed} path='/lecturerdashboard' component={LecturerDashboard} />
           <PrivateRoute authed={studentAuthed} path='/studentdashboard' component={StudentDashboard} />
+          <PrivateRoute authed={overseerAuthed} path='/overseerdashboard' component={OverseerDashboard} />
         </Provider>
       </Switch>
     </Router>

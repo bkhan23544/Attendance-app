@@ -86,7 +86,7 @@ export default function SignInAsLecturer() {
 
       <div className="form-group">
         <label>Description</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" name="description" onChange={handleChange}></textarea>
+        <textarea className="form-control" id="exampleFormControlTextarea1" rows="10" name="description" onChange={handleChange}></textarea>
       </div>
 
 

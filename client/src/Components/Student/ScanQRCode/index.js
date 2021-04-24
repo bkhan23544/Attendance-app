@@ -27,12 +27,12 @@ export default function ScanQRCode({ showModal, toggle, checkAttendance }) {
   const handleScan = (data) => {
     if (data !== null) {
       if (data.text == user.userid) {
-        setError("Please Scan Correct QR Code")
         axios.post('http://localhost:5000/markattendance', {
           classID: currentClass.classId,
           studentName: user.firstName + " " + user.lastName,
           rollNo: user.rollNo,
-          userID: user.userid
+          userID: user.userid,
+          lecturer: currentClass.lecturer
         })
           .then(function (response) {
             if (response.data == "success") {
