@@ -17,10 +17,12 @@ export default function Home(props) {
   const history = useHistory()
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true)
+  let componentMounted = true;
 
-
-  //Check if user has logged in, if yes, check which type of user has logged in and go to that page and save user info in redux store
+  //Check if user has logged in, if yes, check which type of user has logged in and go to that page and save user info in redux store. 
+  // Also check if the user is disabled or not approved. In that case, logout
   useEffect(() => {
+
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
         axios.post('http://localhost:5000/identifyuser', {
@@ -28,14 +30,32 @@ export default function Home(props) {
         })
           .then(function (response) {
             if (response.data[0].accounttype == "Student") {
-              props.setStudentAuthTrue()
-              dispatch(setCurrentUser(response.data[0]))
-              history.push("studentdashboard")
+              if (!response.data[0].approved || response.data[0].disabled) {
+                firebase.auth().signOut()
+                history.push("signinasstudent")
+              }
+              else {
+                props.setStudentAuthTrue()
+                dispatch(setCurrentUser(response.data[0]))
+                history.push("studentdashboard")
+              }
             }
             else if (response.data[0].accounttype == "Lecturer") {
-              props.setLecturerAuthTrue()
+              if (!response.data[0].approved || response.data[0].disabled) {
+                firebase.auth().signOut()
+                history.push("signinaslecturer")
+              }
+              else {
+                props.setLecturerAuthTrue()
+                dispatch(setCurrentUser(response.data[0]))
+                history.push("lecturerdashboard")
+              }
+
+            }
+            else if (response.data[0].accounttype == "overseer") {
+              props.setOverseerAuthTrue()
               dispatch(setCurrentUser(response.data[0]))
-              history.push("lecturerdashboard")
+              history.push("overseerdashboard")
             }
           })
 
@@ -44,12 +64,20 @@ export default function Home(props) {
         history.push("/")
       }
     })
+    return () => {
+      componentMounted = false;
+    }
   })
 
   useEffect(() => {
     setTimeout(() => {
-      setLoading(false)
+      if (componentMounted) {
+        setLoading(false)
+      }
     }, 2000);
+    return () => {
+      componentMounted = false;
+    }
   }, [])
 
   return (
@@ -74,8 +102,9 @@ export default function Home(props) {
                     <Col lg="5">
                       <div className="mt-40 home-2-content">
                         <h1 className="text-white font-weight-normal home-2-title display-4 mb-0">Welcome To Attendance App</h1>
-                        <Link to="signinasstudent" className="login-btn"><Button color="warning" className="mt-3 text-center home-2-title" size="lg" block>Login as Student</Button></Link><br />
+                        <Link to="signinasstudent" className="login-btn"><Button color="warning" className="mt-3 text-center home-2-title" size="lg" block>Login as Student</Button></Link>
                         <Link to="signinaslecturer" className="login-btn"><Button color="warning" className="mt-3 home-2-title" size="lg" block>Login as Lecturer</Button></Link>
+                        <Link to="signinasoverseer" className="login-btn"><Button color="warning" className="mt-3 home-2-title" size="lg" block>Login as Overseer</Button></Link>
                         <Grid container className="mt-3">
                           <Grid item xs>
                             <Link to="forgotpassword" variant="body1" className="text-white">

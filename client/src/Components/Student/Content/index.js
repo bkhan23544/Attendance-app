@@ -8,7 +8,10 @@ import Navbar from "../Navbar";
 import ViewClass from "../ViewClass";
 import MyQRCode from "../MyQRCode";
 import GroupChat from '../GroupChat'
+import Alerts from '../Alerts'
 import './styles.scss'
+import ChangeAttendanceRequest from "../ChangeAttendanceRequest";
+import MyAttendanceRequests from "../MyAttendanceRequests";
 
 
 const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
@@ -31,6 +34,15 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
     else if (url == "/studentdashboard/groupchat") {
       setNavBaarTitle("Group Chat")
     }
+    else if (url == "/studentdashboard/alerts") {
+      setNavBaarTitle("Alerts")
+    }
+    else if (url == "/studentdashboard/changeattendancerequest") {
+      setNavBaarTitle("Change Attendance Request")
+    }
+    else if (url == "/studentdashboard/myattendancerequests") {
+      setNavBaarTitle(" My Attendance Requests")
+    }
   })
 
   return (
@@ -44,7 +56,10 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
         <Route exact path="/studentdashboard/profile" component={Profile} />
         <Route exact path="/studentdashboard/viewclass" component={ViewClass} />
         <Route exact path="/studentdashboard/qrcode" component={MyQRCode} />
-        <Route exact path="/studentdashboard/groupchat" component={GroupChat} />
+        <Route exact path="/studentdashboard/groupchat" component={() => <GroupChat navBaarTitle={navBaarTitle} />} />
+        <Route exact path="/studentdashboard/alerts" component={() => <Alerts navBaarTitle={navBaarTitle} />} />
+        <Route exact path="/studentdashboard/changeattendancerequest" component={ChangeAttendanceRequest} />
+        <Route exact path="/studentdashboard/myattendancerequests" component={() => <MyAttendanceRequests setNavBarTitle={setNavBaarTitle} />} />
       </Switch>
     </Container>
   )

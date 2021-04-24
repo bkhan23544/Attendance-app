@@ -38,13 +38,12 @@ export default function ViewAttendance({ showModal, toggle }) {
           else {
             setError("")
             var data = response.data
-         
-            data.map((v)=>{
-              v.lecturer = user.firstName+" "+user.lastName
+
+            data.map((v) => {
               v.attendanceDate = formatDateForExcel(new Date())
-              v.time = v.timeStamp.substring(11,16)
-          })
-          console.log(data,"date")
+              v.time = v.timeStamp.substring(11, 16)
+            })
+            console.log(data, "date")
             saveAsCsv(
               {
                 data,
@@ -53,8 +52,8 @@ export default function ViewAttendance({ showModal, toggle }) {
                   "studentName": "Student Name",
                   "rollNo": "Roll No",
                   "time": "Sign In Time",
-                  "lecturer":"Lecturer",
-                  "attendanceDate":"Date"
+                  "lecturer": "Lecturer",
+                  "attendanceDate": "Date"
                 },
                 filename: "Attendance" + " " + currentClass.classId + reqDate
               }
@@ -78,13 +77,12 @@ export default function ViewAttendance({ showModal, toggle }) {
           else {
             setError("")
             var data = response.data
-         
-            data.map((v)=>{
-              v.lecturer = user.firstName+" "+user.lastName
+
+            data.map((v) => {
               v.attendanceDate = formatDateForExcel(startDate)
-              v.time = v.timeStamp.substring(11,16)
-          })
-          console.log(data,"date")
+              v.time = v.timeStamp.substring(11, 16)
+            })
+            console.log(data, "date")
             saveAsCsv(
               {
                 data,
@@ -93,8 +91,8 @@ export default function ViewAttendance({ showModal, toggle }) {
                   "studentName": "Student Name",
                   "rollNo": "Roll No",
                   "time": "Sign In Time",
-                  "lecturer":"Lecturer",
-                  "attendanceDate":"Date"
+                  "lecturer": "Lecturer",
+                  "attendanceDate": "Date"
                 },
                 filename: "Attendance" + " " + currentClass.classId + reqDate
               }
@@ -119,7 +117,7 @@ export default function ViewAttendance({ showModal, toggle }) {
     return `${day}${month}${year}`;
   }
 
-   //Convert date in specific format for excel file
+  //Convert date in specific format for excel file
   function formatDateForExcel(date) {
     var d = new Date(date),
       month = '' + (d.getMonth() + 1),

@@ -5,7 +5,9 @@ import {
   faQrcode,
   faUser,
   faTimes,
-  faComments
+  faComments,
+  faBell,
+  faBook
 } from "@fortawesome/free-solid-svg-icons";
 import { NavItem, NavLink, Nav } from "reactstrap";
 import classNames from "classnames";
@@ -46,6 +48,24 @@ const SideBar = ({ isOpen, toggle, setNavbarTitle }) => {
             <NavLink className="sidebar-nav-item" tag={Link} to={"/studentdashboard/groupchat"} onClick={() => { setNavbarTitle("Group Chat"); toggle() }}>
               <FontAwesomeIcon icon={faComments} className="mr-2" />
             Group Chat
+          </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink className="sidebar-nav-item" tag={Link} to={"/studentdashboard/alerts"} onClick={() => { setNavbarTitle("Alerts"); toggle() }}>
+              <FontAwesomeIcon icon={faBell} className="mr-2" />
+            Alerts
+          </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink className="sidebar-nav-item" tag={Link} to={"/studentdashboard/changeattendancerequest"} onClick={() => { setNavbarTitle("Change Attendance Request"); toggle() }}>
+              <FontAwesomeIcon icon={faBook} className="mr-2" />
+            Request Change
+          </NavLink>
+          </NavItem>
+          <NavItem>
+            <NavLink className="sidebar-nav-item" tag={Link} to={"/studentdashboard/myattendancerequests"} onClick={() => { setNavbarTitle("My Attendance Requests"); toggle() }}>
+              <FontAwesomeIcon icon={faBook} className="mr-2" />
+            My Attendance Requests
           </NavLink>
           </NavItem>
           <NavItem>

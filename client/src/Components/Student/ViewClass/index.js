@@ -27,7 +27,6 @@ export default function ViewClass() {
             classID: currentClass.classId
         })
             .then(function (response) {
-                console.log(response.data, "data")
                 setMessages(response.data.reverse())
             })
     }

@@ -17,6 +17,7 @@ export default function AllClasses(props) {
   const [classesData, setClassesData] = useState([])
   const dispatch = useDispatch()
   const history = useHistory()
+  let componentMounted = true;
 
   //Get all classes from database    
   useEffect(() => {
@@ -25,8 +26,14 @@ export default function AllClasses(props) {
       accounttype: "lecturer"
     })
       .then(function (response) {
-        setClassesData(response.data)
+        if (componentMounted) {
+          setClassesData(response.data)
+        }
       })
+
+    return () => {
+      componentMounted = false
+    }
   }, [])
 
   //Save selected class in redux store

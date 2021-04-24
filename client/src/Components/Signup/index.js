@@ -7,7 +7,7 @@ import axios from 'axios'
 import CustomUploadButton from 'react-firebase-file-uploader/lib/CustomUploadButton';
 
 export default function SignInAsLecturer() {
-  const [formData, setFormData] = useState({ accounttype: "Student", programName: "Software Engineering" })
+  const [formData, setFormData] = useState({ approved: 0, disabled: 0, accounttype: "Student", programName: "Software Engineering" })
   const [errors, setErrors] = useState([])
   const history = useHistory()
   const [isUploading, setIsUploading] = useState(false)
@@ -34,7 +34,6 @@ export default function SignInAsLecturer() {
   //handle any error during upload  
   const handleUploadError = error => {
     setIsUploading(false)
-    console.log(error, "eer")
   };
 
   //Save url after upload success  
@@ -98,61 +97,61 @@ export default function SignInAsLecturer() {
 
   //Sign up and save user data to database
   const signUp = () => {
-    console.log(formData,"data")
     axios.post('http://localhost:5000/checkexists', {
       formData
     })
       .then(function (response) {
-        console.log(response.data,"data")
-        if (response.data == "Roll No Exists"){
-        var allErrors = []
-        allErrors.push("Roll No Exists")
-        setErrors(allErrors)
-        setTimeout(() => {
-          setErrors([])
-        }, 3000);
-      }
-      else if(response.data == "Registration No Exists"){
-        var allErrors = []
-        allErrors.push("Registration No Exists")
-        setErrors(allErrors)
-        setTimeout(() => {
-          setErrors([])
-        }, 3000);
-      }
-      else if(response.data == "Not Exists"){
-        firebase.auth().createUserWithEmailAndPassword(formData.email, formData.password)
-        .then((userCredential) => {
-          var userData = formData
-          userData.password = ""
-          userData.userid = userCredential.user.uid
-          axios.post('http://localhost:5000/createuser', {
-            userData
-          })
-            .then(function (response) {
-              if (response.data == "success")
-                history.push("/")
-            })
-            .catch((e) => {
-              var allErrors = []
-              allErrors.push(e)
-              setErrors(allErrors)
-            })
-  
-        }
-        )
-        .catch((error) => {
-          var errorCode = error.code;
-          var errorMessage = error.message;
+        if (response.data == "Roll No Exists") {
           var allErrors = []
-          allErrors.push(errorMessage)
+          allErrors.push("Roll No Exists")
           setErrors(allErrors)
-          // ..
-        });
-      }
+          setTimeout(() => {
+            setErrors([])
+          }, 3000);
+        }
+        else if (response.data == "Registration No Exists") {
+          var allErrors = []
+          allErrors.push("Registration No Exists")
+          setErrors(allErrors)
+          setTimeout(() => {
+            setErrors([])
+          }, 3000);
+        }
+        else if (response.data == "Not Exists") {
+          firebase.auth().createUserWithEmailAndPassword(formData.email, formData.password)
+            .then((userCredential) => {
+              var userData = formData
+              userData.password = ""
+              userData.userid = userCredential.user.uid
+              axios.post('http://localhost:5000/createuser', {
+                userData
+              })
+                .then(function (response) {
+                  if (response.data == "success") {
+                    history.push("/")
+                  }
+
+                })
+                .catch((e) => {
+                  var allErrors = []
+                  allErrors.push(e)
+                  setErrors(allErrors)
+                })
+
+            }
+            )
+            .catch((error) => {
+              var errorCode = error.code;
+              var errorMessage = error.message;
+              var allErrors = []
+              allErrors.push(errorMessage)
+              setErrors(allErrors)
+              // ..
+            });
+        }
       })
 
- 
+
   }
 
   return (
