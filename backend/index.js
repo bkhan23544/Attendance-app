@@ -25,7 +25,7 @@ const io = new Server(server, { cors: { origin: '*' } });
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "bilalkhan",
+    password: "endgame100",
     database: "attendanceapp"
 })
 
