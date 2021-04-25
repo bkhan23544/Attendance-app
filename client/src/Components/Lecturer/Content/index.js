@@ -17,6 +17,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
 
   const [navBaarTitle, setNavBaarTitle] = useState(navBarTitle)
   const history = useHistory()
+  const [currentUrl,setCurrentUrl] = useState("/lecturerdashboard")
 
   //Check which page is opened and change the Navbar title
   useEffect(() => {
@@ -42,6 +43,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
     else if (url == "/lecturerdashboard/myleaverequests") {
       setNavBaarTitle("My Leave Requests")
     }
+    setCurrentUrl(url)
   })
 
   return (
@@ -51,13 +53,13 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
     >
       <Navbar toggleSidebar={toggleSidebar} navBarTitle={navBaarTitle} />
       <Switch>
-        <Route exact path="/lecturerdashboard" component={() => <AllClasses setNavBarTitle={setNavBaarTitle} />} />
-        <Route exact path="/lecturerdashboard/createclass" component={CreateClass} />
-        <Route exact path="/lecturerdashboard/profile" component={Profile} />
-        <Route exact path="/lecturerdashboard/viewclass" component={ViewClass} />
-        <Route exact path="/lecturerdashboard/alerts" component={() => <Alerts navBaarTitle={navBaarTitle} />} />
-        <Route exact path="/lecturerdashboard/applyforleave" component={ApplyForLeave} />
-        <Route exact path="/lecturerdashboard/myleaverequests" component={() => <MyLeaveRequests navBaarTitle={navBaarTitle} />} />
+      {currentUrl=="/lecturerdashboard" && <Route exact path="/lecturerdashboard" component={AllClasses}/>}
+      {currentUrl=="/lecturerdashboard/createclass" && <Route exact path="/lecturerdashboard/createclass" component={CreateClass} />}
+        {currentUrl=="/lecturerdashboard/profile" && <Route exact path="/lecturerdashboard/profile" component={Profile} />}
+        {currentUrl=="/lecturerdashboard/viewclass" && <Route exact path="/lecturerdashboard/viewclass" component={ViewClass} />}
+        {currentUrl=="/lecturerdashboard/alerts" && <Route exact path="/lecturerdashboard/alerts" component={Alerts}/>}
+        {currentUrl=="/lecturerdashboard/applyforleave" && <Route exact path="/lecturerdashboard/applyforleave" component={ApplyForLeave} />}
+        {currentUrl=="/lecturerdashboard/myleaverequests" && <Route exact path="/lecturerdashboard/myleaverequests" component={MyLeaveRequests} />}
       </Switch>
     </Container>
   )

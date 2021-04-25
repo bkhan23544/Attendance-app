@@ -21,7 +21,11 @@ export default function AllStudents() {
             .then(function (response) {
                 console.log(response.data,"res")
                 if (response.data.length > 0) {
+<<<<<<< HEAD
                     if(componentMounted){
+=======
+                    console.log(response,"response")
+>>>>>>> b1a3b0bf460f226c282993722658f33393feb7fb
                     setStudents(response.data)
                     }
                 }
