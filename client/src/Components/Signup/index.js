@@ -101,6 +101,7 @@ export default function SignInAsLecturer() {
       formData
     })
       .then(function (response) {
+        console.log(response.data,"response")
         if (response.data == "Roll No Exists") {
           var allErrors = []
           allErrors.push("Roll No Exists")

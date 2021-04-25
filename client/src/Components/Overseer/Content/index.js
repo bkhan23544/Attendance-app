@@ -16,7 +16,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
 
   const [navBaarTitle, setNavBaarTitle] = useState(navBarTitle)
   const history = useHistory()
-
+  const [currentUrl,setCurrentUrl] = useState("/overseerdashboard")
   //Check which page is opened and change the Navbar title
   useEffect(() => {
     var url = history.location.pathname
@@ -41,6 +41,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
     if (url == "/overseerdashboard/attendancechangerequest") {
       setNavBaarTitle("Attendance Change Requests")
     }
+    setCurrentUrl(url)
   })
 
   return (
@@ -50,13 +51,13 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
     >
       <Navbar toggleSidebar={toggleSidebar} navBarTitle={navBaarTitle} />
       <Switch>
-        <Route exact path="/overseerdashboard/allclasses" component={() => <AllClasses setNavBarTitle={setNavBaarTitle} />} />
-        <Route exact path="/overseerdashboard/viewclass" component={ViewClass} />
-        <Route exact path="/overseerdashboard" component={() => <AllLecturers setNavBarTitle={setNavBaarTitle} />} />
-        <Route exact path="/overseerdashboard/allstudents" component={() => <AllStudents setNavBarTitle={setNavBaarTitle} />} />
-        <Route exact path="/overseerdashboard/sendalerts" component={() => <SendAlerts setNavBarTitle={setNavBaarTitle} />} />
-        <Route exact path="/overseerdashboard/lecturerleaverequest" component={() => <LecturerLeaveRequest setNavBarTitle={setNavBaarTitle} />} />
-        <Route exact path="/overseerdashboard/attendancechangerequest" component={() => <AttendanceChangeRequests setNavBarTitle={setNavBaarTitle} />} />
+        {currentUrl=="/overseerdashboard/allclasses" && <Route exact path="/overseerdashboard/allclasses" component={() => <AllClasses setNavBarTitle={setNavBaarTitle} />} />}
+        {currentUrl=="/overseerdashboard/viewclass" && <Route exact path="/overseerdashboard/viewclass" component={ViewClass} />}
+        {currentUrl=="/overseerdashboard" && <Route exact path="/overseerdashboard" component={() => <AllLecturers setNavBarTitle={setNavBaarTitle} />} />}
+        {currentUrl=="/overseerdashboard/allstudents" && <Route exact path="/overseerdashboard/allstudents" component={() => <AllStudents setNavBarTitle={setNavBaarTitle} />} />}
+        {currentUrl=="/overseerdashboard/sendalerts" && <Route exact path="/overseerdashboard/sendalerts" component={() => <SendAlerts setNavBarTitle={setNavBaarTitle} />} />}
+        {currentUrl=="/overseerdashboard/lecturerleaverequest" && <Route exact path="/overseerdashboard/lecturerleaverequest" component={() => <LecturerLeaveRequest setNavBarTitle={setNavBaarTitle} />} />}
+        {currentUrl=="/overseerdashboard/attendancechangerequest" && <Route exact path="/overseerdashboard/attendancechangerequest" component={() => <AttendanceChangeRequests setNavBarTitle={setNavBaarTitle} />} />}
       </Switch>
     </Container>
   )
