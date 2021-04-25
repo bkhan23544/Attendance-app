@@ -54,7 +54,7 @@ export default function SignInAsAdmin() {
     return () => {
       componentMounted = false
     }
-  })
+  },[])
 
 
   //Check if user exists and then login

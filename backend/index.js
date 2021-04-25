@@ -25,7 +25,7 @@ const io = new Server(server, { cors: { origin: '*' } });
 const connection = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "endgame100",
+    password: "bilalkhan",
     database: "attendanceapp"
 })
 
@@ -58,7 +58,6 @@ function formatDate(date) {
 //Create a user and save details in database
 app.post("/createuser", (req, res) => {
     const { userData } = req.body
-    console.log(userData, "data")
     if (userData.accounttype == "Student") {
         connection.query((`INSERT INTO students(userid,firstName,lastName,rollNo,programName,email,accounttype,profilePic,approved,disabled) VALUES("${userData.userid}","${userData.firstName}","${userData.lastName}","${userData.rollNo}","${userData.programName}","${userData.email}","${userData.accounttype}","${userData.profilePic}",${userData.approved},${userData.disabled})`), (err, results) => {
             if (err) {
@@ -166,7 +165,6 @@ app.post("/createclass", (req, res) => {
     var { className, subjectName, createdBy, programName, description, lecturer } = req.body.classInfo
     let sql = `INSERT INTO classes(className,subjectName,createdBy,programName,description,lecturer) VALUES(?,?,?,?,?,?)`
     let sqlData = [className, subjectName, createdBy, programName, description, lecturer]
-
     connection.query(sql, sqlData, (err, results) => {
         if (err) {
             return res.send(err)
@@ -381,7 +379,6 @@ app.post("/getattendance", (req, res) => {
 
     var { classID, date } = req.body
     var tableName = "table" + classID + date
-    console.log(classID, date, "date")
 
     connection.query((`SELECT * FROM ${tableName}`), (err, results) => {
         if (err) {
@@ -489,7 +486,6 @@ app.post("/disableaccount", (req, res) => {
 app.post("/sendalert", (req, res) => {
     var { title, description, alertFor } = req.body
     var timeStamp = new Date()
-    console.log(timeStamp, "time")
     let sql = `INSERT INTO alerts(title,description,alertFor,timeStamp) VALUES(?,?,?,?)`
     let sqlData = [title, description, alertFor, timeStamp]
     connection.query(sql, sqlData, (err, results) => {

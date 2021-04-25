@@ -17,6 +17,7 @@ export default function ChangeAttendanceRequest() {
   const [selectClicked, setSelectClicked] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
+  const [created,setCreated] = useState(false)
   const history = useHistory()
   const user = useSelector(state => state.setCurrentUser)
 
@@ -85,18 +86,6 @@ export default function ChangeAttendanceRequest() {
     }, 5000);
   }
 
-  useEffect(() => {
-    axios.post('http://localhost:5000/getallclasses', {
-      uid: user.userid,
-      accounttype: "student",
-      programName: user.programName
-    })
-      .then(function (response) {
-        setClassesData(response.data)
-      })
-
-  }, [])
-
 
   //Make a request to change attendance
   const makeRequest = () => {
@@ -112,15 +101,21 @@ export default function ChangeAttendanceRequest() {
       requestInfo
     })
       .then(function (response) {
-        if (response.data == "success")
-          history.push("/studentdashboard")
+        if (response.data == "success"){
+          setCreated(true)
+          setTimeout(() => {
+            setCreated(false)
+          }, 5000);
+        }
       })
   }
 
   return (
     <div className="leave-inner">
       <h3>Change Attendance Request</h3>
-
+      {created && <Alert color="success">
+            Request Sent Successfully
+          </Alert>}
       <div className="form-group">
         <label>Title</label>
         <input type="text" className="form-control" placeholder="Enter Title" name="title" onChange={handleChange} />
@@ -165,7 +160,7 @@ export default function ChangeAttendanceRequest() {
           Upload Medical Certificate
   </CustomUploadButton>}
 
-      {formData.medicalCert && <div class="img-wrap">
+      {formData.medicalCert && <div className="img-wrap">
         <span className="close" onClick={() => { setFormData({ ...formData, medicalCert: "" }); setIsUploading(false) }}>&times;</span>
         <img src={formData.medicalCert} className="displayImg" />
       </div>}

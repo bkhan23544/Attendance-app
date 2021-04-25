@@ -7,6 +7,7 @@ import { useHistory } from 'react-router-dom'
 export default function SendAlerts() {
   const history = useHistory()
   const [errors, setErrors] = useState([])
+  const [created,setCreated] = useState(false)
   const [formData, setFormData] = useState({ alertFor: "Lecturers" })
 
 
@@ -35,7 +36,10 @@ export default function SendAlerts() {
       })
         .then(function (response) {
           if (response.data = "success") {
-            history.push("/overseerdashboard")
+            setCreated(true)
+            setTimeout(() => {
+              setCreated(false)
+            }, 5000);
           }
         })
     }
@@ -49,7 +53,9 @@ export default function SendAlerts() {
   return (
     <div className="class-inner">
       <h3>Send Alerts</h3>
-
+      {created && <Alert color="success">
+            Alert Sent Successfully
+          </Alert>}
       <div className="form-group">
         <label>Title</label>
         <input type="email" className="form-control" placeholder="Enter Title.." name="title" onChange={handleChange} />

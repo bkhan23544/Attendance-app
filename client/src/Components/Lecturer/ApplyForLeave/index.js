@@ -11,6 +11,7 @@ import DatePicker from "react-datepicker";
 export default function ApplyForLeave() {
   const [formData, setFormData] = useState({ startDate: new Date(), endDate: new Date() })
   const [errors, setErrors] = useState([])
+  const [created,setCreated] = useState(false)
   const history = useHistory()
   const user = useSelector(state => state.setCurrentUser)
 
@@ -61,15 +62,21 @@ export default function ApplyForLeave() {
     })
       .then(function (response) {
         console.log(response.data, "data")
-        if (response.data == "success")
-          history.push("/lecturerdashboard")
+        if (response.data == "success"){
+          setCreated(true)
+          setTimeout(() => {
+            setCreated(false)
+          }, 5000);
+        }
       })
   }
 
   return (
     <div className="leave-inner">
       <h3>Apply For Leave</h3>
-
+      {created && <Alert color="success">
+            Applied for Leave Successfully
+          </Alert>}
       <div className="form-group">
         <label>Title</label>
         <input type="text" className="form-control" placeholder="Enter Title" name="title" onChange={handleChange} />

@@ -224,7 +224,7 @@ export default function SignInAsLecturer() {
             Upload Profile Picture
   </CustomUploadButton>}
 
-        {formData.profilePic && <div class="img-wrap">
+        {formData.profilePic && <div className="img-wrap">
           <span className="close" onClick={() => { setFormData({ ...formData, profilePic: "" }); setIsUploading(false) }}>&times;</span>
           <img src={formData.profilePic} className="displayImg" />
         </div>}

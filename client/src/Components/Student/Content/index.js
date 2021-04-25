@@ -18,7 +18,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
 
   const [navBaarTitle, setNavBaarTitle] = useState(navBarTitle)
   const history = useHistory()
-
+  const [currentUrl,setCurrentUrl] = useState("/overseerdashboard")
   //Check which page is opened and change the Navbar title
   useEffect(() => {
     var url = history.location.pathname
@@ -43,6 +43,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
     else if (url == "/studentdashboard/myattendancerequests") {
       setNavBaarTitle(" My Attendance Requests")
     }
+    setCurrentUrl(url)
   })
 
   return (
@@ -52,14 +53,14 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
     >
       <Navbar toggleSidebar={toggleSidebar} navBarTitle={navBaarTitle} />
       <Switch>
-        <Route exact path="/studentdashboard" component={() => <AllClasses setNavBarTitle={setNavBaarTitle} />} />
-        <Route exact path="/studentdashboard/profile" component={Profile} />
-        <Route exact path="/studentdashboard/viewclass" component={ViewClass} />
-        <Route exact path="/studentdashboard/qrcode" component={MyQRCode} />
-        <Route exact path="/studentdashboard/groupchat" component={() => <GroupChat navBaarTitle={navBaarTitle} />} />
-        <Route exact path="/studentdashboard/alerts" component={() => <Alerts navBaarTitle={navBaarTitle} />} />
-        <Route exact path="/studentdashboard/changeattendancerequest" component={ChangeAttendanceRequest} />
-        <Route exact path="/studentdashboard/myattendancerequests" component={() => <MyAttendanceRequests setNavBarTitle={setNavBaarTitle} />} />
+      {currentUrl=="/studentdashboard" && <Route exact path="/studentdashboard" component={AllClasses} />}
+        {currentUrl=="/studentdashboard/profile" && <Route exact path="/studentdashboard/profile" component={Profile} />}
+        {currentUrl=="/studentdashboard/viewclass" && <Route exact path="/studentdashboard/viewclass" component={ViewClass} />}
+        {currentUrl=="/studentdashboard/qrcode" && <Route exact path="/studentdashboard/qrcode" component={MyQRCode} />}
+        {currentUrl=="/studentdashboard/groupchat" && <Route exact path="/studentdashboard/groupchat" component={GroupChat} />}
+        {currentUrl=="/studentdashboard/alerts" && <Route exact path="/studentdashboard/alerts" component={Alerts} />}
+        {currentUrl=="/studentdashboard/changeattendancerequest" && <Route exact path="/studentdashboard/changeattendancerequest" component={ChangeAttendanceRequest} />}
+        {currentUrl=="/studentdashboard/myattendancerequests" && <Route exact path="/studentdashboard/myattendancerequests" component={MyAttendanceRequests} />}
       </Switch>
     </Container>
   )

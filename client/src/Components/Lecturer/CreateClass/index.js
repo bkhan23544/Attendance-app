@@ -11,7 +11,9 @@ import axios from 'axios'
 export default function SignInAsLecturer() {
   const [formData, setFormData] = useState({ programName: "Software Engineering" })
   const [errors, setErrors] = useState([])
+  const [created,setCreated] = useState(false)
   const history = useHistory()
+
   const user = useSelector(state => state.setCurrentUser)
 
 
@@ -47,6 +49,7 @@ export default function SignInAsLecturer() {
 
   //Create a class
   const createClass = () => {
+    
     var classInfo = {}
     classInfo = formData
     classInfo.createdBy = user.userid
@@ -55,15 +58,23 @@ export default function SignInAsLecturer() {
       classInfo
     })
       .then(function (response) {
-        if (response.data == "success")
-          history.push("/lecturerdashboard")
+        console.log(response,"response")
+        if (response.data == "success"){
+          setCreated(true)
+          setTimeout(() => {
+            setCreated(false)
+          }, 3000);
+        }
+          
       })
   }
 
   return (
     <div className="class-inner">
       <h3>Create Class</h3>
-
+      {created && <Alert color="success">
+            Class Created Successfully
+          </Alert>}
       <div className="form-group">
         <label>Class Name</label>
         <input type="email" className="form-control" placeholder="Enter Class Name" name="className" onChange={handleChange} />

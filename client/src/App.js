@@ -15,7 +15,7 @@ import SignUp from './Components/Signup'
 import LecturerDashboard from './Components/Lecturer/Dashboard'
 import StudentDashboard from './Components/Student/Dashboard'
 import OverseerDashboard from './Components/Overseer/Dashboard'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Provider } from 'react-redux'
 import store from './redux'
 
@@ -40,7 +40,7 @@ function App(props) {
   const [studentAuthed, setStudentAuthed] = useState(false)
   const [lecturerAuthed, setLecturerAuthed] = useState(false)
   const [overseerAuthed, setOverseerAuthed] = useState(false)
-  const history = useHistory
+  const history = useHistory()
 
 
 
@@ -48,7 +48,7 @@ function App(props) {
     <Router history={history}>
       <Switch>
         <Provider store={store}>
-          <Route exact path="/">
+            <Route exact path="/">
             <Home setStudentAuthTrue={() => setStudentAuthed(true)} setLecturerAuthTrue={() => setLecturerAuthed(true)} setOverseerAuthTrue={() => setOverseerAuthed(true)} />
           </Route>
           <Route exact path="/signinasstudent">

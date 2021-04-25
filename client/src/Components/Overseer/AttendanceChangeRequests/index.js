@@ -18,6 +18,7 @@ export default function LecturerLeaveRequest() {
 
     //Get all attendance change requests from database
     const getRequests = () => {
+        console.log("ran again")
         axios.post('http://localhost:5000/getattendancerequests')
             .then(function (response) {
                 if (componentMounted) {

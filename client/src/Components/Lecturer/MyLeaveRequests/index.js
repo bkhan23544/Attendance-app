@@ -35,6 +35,7 @@ export default function LecturerLeaveRequest(props) {
                         <div key={i} className="request-inner">
                             <h3 className="text-left">{v.title}</h3>
                             <p>For <b>{Math.round((Date.parse(v.endDate) - Date.parse(v.startDate)) / 1000 / 60 / 60 / 24)} Days</b></p>
+                            <p>From <b>{v.startDate.slice(0, 10)}</b> to <b>{v.endDate.slice(0, 10)}</b></p>
                             <p><b>Description:</b> {v.description}</p>
                             <p><b>Status</b>: {v.approved ? "Approved" : "Pending"}</p>
                         </div>

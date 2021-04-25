@@ -19,6 +19,7 @@ export default function AllStudents() {
         axios.post('http://localhost:5000/getstudents')
             .then(function (response) {
                 if (response.data.length > 0) {
+                    console.log(response,"response")
                     setStudents(response.data)
                 }
 
