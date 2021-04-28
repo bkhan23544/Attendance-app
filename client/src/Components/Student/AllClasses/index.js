@@ -31,6 +31,7 @@ export default function AllClasses(props) {
           setClassesData(response.data)
         }
       })
+      console.log("ran")
 
     return () => {
       componentMounted = false
@@ -40,7 +41,7 @@ export default function AllClasses(props) {
   //Save selected class in redux store
   const viewClass = (v) => {
     dispatch(setCurrentClass(v))
-    props.setNavBarTitle("View Class")
+    props.setCurrentUrl()
     history.push("/studentdashboard/viewclass")
   }
 

@@ -9,7 +9,6 @@ const BarStyling = { width: "20rem", background: "#F2F1F9", border: "none", padd
 export default function AllStudents() {
     const [students, setStudents] = useState([])
     const [search, setSearch] = useState("")
-    let componentMounted = true
 
     useEffect(() => {
         getAllStudents()
@@ -19,25 +18,13 @@ export default function AllStudents() {
     const getAllStudents = () => {
         axios.post('http://localhost:5000/getstudents')
             .then(function (response) {
-                console.log(response.data,"res")
                 if (response.data.length > 0) {
-<<<<<<< HEAD
-                    if(componentMounted){
-=======
                     console.log(response,"response")
->>>>>>> b1a3b0bf460f226c282993722658f33393feb7fb
                     setStudents(response.data)
-                    }
                 }
 
             })
     }
-
-    useEffect(()=>{
-        return()=>{
-            componentMounted=false
-        }
-    })
 
     //Approve a student account
     const approveAccount = (id) => {

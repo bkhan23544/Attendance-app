@@ -31,6 +31,9 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
     else if (url == "/studentdashboard/qrcode") {
       setNavBaarTitle("My QR Code")
     }
+    else if (url == "/studentdashboard/viewclass") {
+      setNavBaarTitle("View Class")
+    }
     else if (url == "/studentdashboard/groupchat") {
       setNavBaarTitle("Group Chat")
     }
@@ -51,9 +54,11 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
       fluid
       className={classNames("content", { "is-open": sidebarIsOpen })}
     >
-      <Navbar toggleSidebar={toggleSidebar} navBarTitle={navBaarTitle} />
+      <Navbar toggleSidebar={toggleSidebar} navBarTitle={navBaarTitle}/>
       <Switch>
-      {currentUrl=="/studentdashboard" && <Route exact path="/studentdashboard" component={AllClasses} />}
+        {currentUrl=="/studentdashboard" && <Route exact path="/studentdashboard">
+          <AllClasses setCurrentUrl={()=>setCurrentUrl("/studentdashboard/viewclass")}/>
+          </Route>}
         {currentUrl=="/studentdashboard/profile" && <Route exact path="/studentdashboard/profile" component={Profile} />}
         {currentUrl=="/studentdashboard/viewclass" && <Route exact path="/studentdashboard/viewclass" component={ViewClass} />}
         {currentUrl=="/studentdashboard/qrcode" && <Route exact path="/studentdashboard/qrcode" component={MyQRCode} />}

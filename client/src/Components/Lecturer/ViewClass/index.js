@@ -67,7 +67,7 @@ export default function ViewClass() {
             </div>
             <div className="container main-class-messages-inner">
                 <div className="form-group">
-                    <textarea value={message} type="text" class="form-control" id="exampleFormControlTextarea1" placeholder="Add A Message To Class" rows="5" name="message" onChange={(e) => setMessage(e.target.value)}></textarea>
+                    <textarea value={message} type="text" className="form-control" id="exampleFormControlTextarea1" placeholder="Add A Message To Class" rows="5" name="message" onChange={(e) => setMessage(e.target.value)}></textarea>
                 </div>
                 {message && <Button type="submit" color="primary" block onClick={addMessage}>Submit</Button>}
             </div>

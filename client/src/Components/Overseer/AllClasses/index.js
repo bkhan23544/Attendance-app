@@ -39,7 +39,7 @@ export default function AllClasses(props) {
   //Save selected class in redux store
   const viewClass = (v) => {
     dispatch(setCurrentClass(v))
-    props.setNavBarTitle("View Class")
+    props.setCurrentUrl()
     history.push("/overseerdashboard/viewclass")
   }
 

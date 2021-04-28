@@ -101,19 +101,19 @@ export default function Home(props) {
                   <Row className="align-items-center">
                     <Col lg="5">
                       <div className="mt-40 home-2-content">
-                        <h1 className="text-white font-weight-normal home-2-title display-4 mb-0">Welcome To Attendance App</h1>
+                        <h1 className="text-white font-weight-normal home-2-title display-4 mb-0">Student Management System</h1>
                         <Link to="signinasstudent" className="login-btn"><Button color="warning" className="mt-3 text-center home-2-title" size="lg" block>Login as Student</Button></Link>
                         <Link to="signinaslecturer" className="login-btn"><Button color="warning" className="mt-3 home-2-title" size="lg" block>Login as Lecturer</Button></Link>
                         <Link to="signinasoverseer" className="login-btn"><Button color="warning" className="mt-3 home-2-title" size="lg" block>Login as Overseer</Button></Link>
                         <Grid container className="mt-3">
                           <Grid item xs>
                             <Link to="forgotpassword" variant="body1" className="text-white">
-                              Don't remember your password?
+                              Unsure of password?
               </Link>
                           </Grid>
                           <Grid item>
                             <Link to="signup" variant="body1" className="text-white">
-                              {"Need to create an account? Sign Up"}
+                              {"Need to make an account? Create account here"}
                             </Link>
                           </Grid>
                         </Grid>

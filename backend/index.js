@@ -70,7 +70,7 @@ app.post("/createuser", (req, res) => {
     }
 
     else if (userData.accounttype == "Lecturer") {
-        connection.query((`INSERT INTO lecturers(userid,firstName,lastName,regNo,email,accounttype,approved,disabled) VALUES("${userData.userid}","${userData.firstName}","${userData.lastName}","${userData.regNo}","${userData.email}","${userData.accounttype}",${userData.approved},${userData.disabled})`), (err, results) => {
+        connection.query((`INSERT INTO lecturers(userid,firstName,lastName,regNo,email,accounttype,profilePic,approved,disabled) VALUES("${userData.userid}","${userData.firstName}","${userData.lastName}","${userData.regNo}","${userData.email}","${userData.accounttype}","${userData.profilePic}",${userData.approved},${userData.disabled})`), (err, results) => {
             if (err) {
                 return res.send(err)
             }

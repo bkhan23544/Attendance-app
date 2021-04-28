@@ -97,11 +97,12 @@ export default function SignInAsLecturer() {
 
   //Sign up and save user data to database
   const signUp = () => {
+    
     axios.post('http://localhost:5000/checkexists', {
       formData
     })
       .then(function (response) {
-        console.log(response.data,"response")
+        console.log(response.data,"res")
         if (response.data == "Roll No Exists") {
           var allErrors = []
           allErrors.push("Roll No Exists")
@@ -128,6 +129,7 @@ export default function SignInAsLecturer() {
                 userData
               })
                 .then(function (response) {
+                  console.log(response,"res")
                   if (response.data == "success") {
                     history.push("/")
                   }
