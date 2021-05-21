@@ -105,7 +105,7 @@ export default function ApplyForLeave() {
           </Alert>
         ))
       }
-      <Button type="submit" color="primary" block onClick={onSubmit}>Submit</Button>
+      <Button type="submit" color="warning" block onClick={onSubmit}>Submit</Button>
     </div>
   )
 }

@@ -21,17 +21,17 @@ export default function AllClasses(props) {
 
   //Get all classes from database offered for the user program   
   useEffect(() => {
-    axios.post('http://localhost:5000/getallclasses', {
-      uid: user.userid,
+    const params = new URLSearchParams(
+      {uid: user.userid,
       accounttype: "student",
-      programName: user.programName
-    })
+      programName: user.programName}).toString();
+
+    axios.get(`http://localhost:5000/getallclasses?${params}`)
       .then(function (response) {
         if (componentMounted) {
           setClassesData(response.data)
         }
       })
-      console.log("ran")
 
     return () => {
       componentMounted = false
@@ -41,7 +41,7 @@ export default function AllClasses(props) {
   //Save selected class in redux store
   const viewClass = (v) => {
     dispatch(setCurrentClass(v))
-    props.setCurrentUrl()
+    props.setUrl()
     history.push("/studentdashboard/viewclass")
   }
 
@@ -56,7 +56,7 @@ export default function AllClasses(props) {
                   <CardTitle tag="h5">{v.className}</CardTitle>
                   <CardSubtitle tag="h6" className="mb-2 text-muted">{v.subjectName}</CardSubtitle>
                   <CardText>{v.description.substring(0, 50)}{"..."}</CardText>
-                  <Button color="primary" onClick={() => viewClass(v)}>View</Button>
+                  <Button color="warning" onClick={() => viewClass(v)}>View</Button>
                 </CardBody>
               </Card>
             )

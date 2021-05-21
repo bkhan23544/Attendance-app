@@ -23,9 +23,9 @@ export default function ViewClass() {
 
     //Get all class messages
     const getAllMessages = () => {
-        axios.post('http://localhost:5000/getallclassmessages', {
-            classID: currentClass.classId
-        })
+        const params = new URLSearchParams({classID: currentClass.classId}).toString();
+
+        axios.get(`http://localhost:5000/getallclassmessages?${params}`)
             .then(function (response) {
                 setMessages(response.data.reverse())
             })
@@ -55,7 +55,7 @@ export default function ViewClass() {
     return (
         <div>
             <div className="container main-class-inner">
-                {showAttendanceButton ? <Button onClick={() => setShowModal(true)} className="attendance-button" color="primary">Mark Attendance</Button>
+                {showAttendanceButton ? <Button onClick={() => setShowModal(true)} className="attendance-button" color="warning">Mark Attendance</Button>
                     :
                     <p className="text-secondary attendance-button">Attendance Marked</p>
                 }
@@ -68,9 +68,9 @@ export default function ViewClass() {
                     currentClass.description.length > 200 ? currentClass.description.substring(0, 200) + "..." : currentClass.description
                 }</p>
                 {currentClass.description.length > 200 ? readMore ?
-                    <a onClick={() => setReadMore(false)}><p className="text-primary cursor-pointer">Read Less</p></a>
+                    <a onClick={() => setReadMore(false)}><p className="text-warning cursor-pointer">Read Less</p></a>
                     :
-                    <a onClick={() => setReadMore(true)}><p className="text-primary cursor-pointer">Read More</p></a>
+                    <a onClick={() => setReadMore(true)}><p className="text-warning cursor-pointer">Read More</p></a>
                     :
                     <div></div>
                 }

@@ -18,8 +18,7 @@ export default function LecturerLeaveRequest() {
 
     //Get all attendance change requests from database
     const getRequests = () => {
-        console.log("ran again")
-        axios.post('http://localhost:5000/getattendancerequests')
+        axios.get('http://localhost:5000/getattendancerequests')
             .then(function (response) {
                 if (componentMounted) {
                     setAlerts(response.data)
@@ -65,7 +64,7 @@ export default function LecturerLeaveRequest() {
                             <p><b>Description:</b> {v.description}</p>
                             <b>Medical Certificate:</b><br />
                             <img src={v.medicalCert} className="medical-cert" /><br />
-                            {v.approved ? <p>Approved</p> : <Button color="primary" onClick={() => approveRequest(v)}>Approve</Button>}
+                            {v.approved ? <p>Approved</p> : <Button color="warning" onClick={() => approveRequest(v)}>Approve</Button>}
                         </div>
                     )
                 })

@@ -21,9 +21,9 @@ export default function ViewClass() {
     }, [])
 
     const getAllMessages = () => {
-        axios.post('http://localhost:5000/getallclassmessages', {
-            classID: currentClass.classId
-        })
+        const params = new URLSearchParams({classID: currentClass.classId}).toString();
+
+        axios.get(`http://localhost:5000/getallclassmessages?${params}`)
             .then(function (response) {
                 setMessages(response.data.reverse())
             })
@@ -49,7 +49,7 @@ export default function ViewClass() {
     return (
         <div>
             <div className="container main-class-inner">
-                <Button onClick={toggle} className="attendance-button" color="primary">View Attendance</Button>
+                <Button onClick={toggle} className="attendance-button" color="warning">View Attendance</Button>
                 <h2>{currentClass.className}</h2>
                 <h5 className="text-secondary">{currentClass.subjectName}</h5>
                 <h6 className="text-secondary">{currentClass.programName} Department</h6>
@@ -58,18 +58,18 @@ export default function ViewClass() {
                     currentClass.description.length > 200 ? currentClass.description.substring(0, 200) + "..." : currentClass.description
                 }</p>
                 {currentClass.description.length > 200 ? readMore ?
-                    <a onClick={() => setReadMore(false)}><p className="text-primary cursor-pointer">Read Less</p></a>
+                    <a onClick={() => setReadMore(false)}><p className="text-warning cursor-pointer">Read Less</p></a>
                     :
-                    <a onClick={() => setReadMore(true)}><p className="text-primary cursor-pointer">Read More</p></a>
+                    <a onClick={() => setReadMore(true)}><p className="text-warning cursor-pointer">Read More</p></a>
                     :
                     <div></div>
                 }
             </div>
             <div className="container main-class-messages-inner">
                 <div className="form-group">
-                    <textarea value={message} type="text" className="form-control" id="exampleFormControlTextarea1" placeholder="Add A Message To Class" rows="5" name="message" onChange={(e) => setMessage(e.target.value)}></textarea>
+                    <textarea value={message} type="text" class="form-control" id="exampleFormControlTextarea1" placeholder="Add A Message To Class" rows="5" name="message" onChange={(e) => setMessage(e.target.value)}></textarea>
                 </div>
-                {message && <Button type="submit" color="primary" block onClick={addMessage}>Submit</Button>}
+                {message && <Button type="submit" color="warning" block onClick={addMessage}>Submit</Button>}
             </div>
 
             {messages.length > 0 ?

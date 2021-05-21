@@ -13,14 +13,27 @@ import CustomUploadButton from 'react-firebase-file-uploader/lib/CustomUploadBut
 export default function ChangeAttendanceRequest() {
   const [formData, setFormData] = useState({ date: new Date(), class: "Select Class" })
   const [errors, setErrors] = useState([])
-  const [created,setCreated] = useState(false)
   const [classesData, setClassesData] = useState([])
   const [selectClicked, setSelectClicked] = useState(false)
   const [isUploading, setIsUploading] = useState(false)
   const [uploadProgress, setUploadProgress] = useState(0)
+  const [created,setCreated] = useState(false)
   const history = useHistory()
   const user = useSelector(state => state.setCurrentUser)
 
+
+  useEffect(() => {
+    const params = new URLSearchParams({
+      uid: user.userid,
+      accounttype: "student",
+      programName: user.programName
+    }).toString();
+    axios.get(`http://localhost:5000/getallclasses?${params}`)
+      .then(function (response) {
+        setClassesData(response.data)
+      })
+
+  }, [])
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
@@ -85,18 +98,6 @@ export default function ChangeAttendanceRequest() {
       setErrors([])
     }, 5000);
   }
-
-  useEffect(() => {
-    axios.post('http://localhost:5000/getallclasses', {
-      uid: user.userid,
-      accounttype: "student",
-      programName: user.programName
-    })
-      .then(function (response) {
-        setClassesData(response.data)
-      })
-
-  }, [])
 
 
   //Make a request to change attendance
@@ -172,7 +173,7 @@ export default function ChangeAttendanceRequest() {
           Upload Medical Certificate
   </CustomUploadButton>}
 
-      {formData.medicalCert && <div class="img-wrap">
+      {formData.medicalCert && <div className="img-wrap">
         <span className="close" onClick={() => { setFormData({ ...formData, medicalCert: "" }); setIsUploading(false) }}>&times;</span>
         <img src={formData.medicalCert} className="displayImg" />
       </div>}
@@ -184,7 +185,7 @@ export default function ChangeAttendanceRequest() {
           </Alert>
         ))
       }
-      <Button className="mt-4" type="submit" color="primary" block onClick={onSubmit}>Submit</Button>
+      <Button className="mt-4" type="submit" color="warning" block onClick={onSubmit}>Submit</Button>
     </div>
   )
 }

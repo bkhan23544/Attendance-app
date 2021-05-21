@@ -25,9 +25,8 @@ export default function Home(props) {
 
     firebase.auth().onAuthStateChanged(function (user) {
       if (user) {
-        axios.post('http://localhost:5000/identifyuser', {
-          uid: user.uid
-        })
+        const params = new URLSearchParams({uid: user.uid}).toString();
+        axios.get(`http://localhost:5000/identifyuser?${params}`)
           .then(function (response) {
             if (response.data[0].accounttype == "Student") {
               if (!response.data[0].approved || response.data[0].disabled) {
@@ -83,14 +82,10 @@ export default function Home(props) {
   return (
     <>
       {loading ?
+      <div className="loading">
         <div className="center">
-          <Loader
-            type="Puff"
-            color="#0e6cff"
-            height={100}
-            width={100}
-          />
           <h4>Loading...</h4>
+        </div>
         </div>
         :
         <React.Fragment>
@@ -101,19 +96,19 @@ export default function Home(props) {
                   <Row className="align-items-center">
                     <Col lg="5">
                       <div className="mt-40 home-2-content">
-                        <h1 className="text-white font-weight-normal home-2-title display-4 mb-0">Student Management System</h1>
+                        <h1 className="text-white font-weight-normal home-2-title display-4 mb-0">Welcome To Attendance App</h1>
                         <Link to="signinasstudent" className="login-btn"><Button color="warning" className="mt-3 text-center home-2-title" size="lg" block>Login as Student</Button></Link>
                         <Link to="signinaslecturer" className="login-btn"><Button color="warning" className="mt-3 home-2-title" size="lg" block>Login as Lecturer</Button></Link>
                         <Link to="signinasoverseer" className="login-btn"><Button color="warning" className="mt-3 home-2-title" size="lg" block>Login as Overseer</Button></Link>
                         <Grid container className="mt-3">
                           <Grid item xs>
                             <Link to="forgotpassword" variant="body1" className="text-white">
-                              Unsure of password?
+                              Forgot password?
               </Link>
                           </Grid>
                           <Grid item>
                             <Link to="signup" variant="body1" className="text-white">
-                              {"Need to make an account? Create account here"}
+                              {"Don't have an account? Sign Up"}
                             </Link>
                           </Grid>
                         </Grid>

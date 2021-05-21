@@ -49,16 +49,18 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
     setCurrentUrl(url)
   })
 
+  const setUrl=()=>{
+    setCurrentUrl("/studentdashboard/viewclass")
+  }
+
   return (
     <Container
       fluid
       className={classNames("content", { "is-open": sidebarIsOpen })}
     >
-      <Navbar toggleSidebar={toggleSidebar} navBarTitle={navBaarTitle}/>
+      <Navbar toggleSidebar={toggleSidebar} navBarTitle={navBaarTitle} />
       <Switch>
-        {currentUrl=="/studentdashboard" && <Route exact path="/studentdashboard">
-          <AllClasses setCurrentUrl={()=>setCurrentUrl("/studentdashboard/viewclass")}/>
-          </Route>}
+      {currentUrl=="/studentdashboard" && <Route exact path="/studentdashboard" component={()=><AllClasses setUrl={setUrl}/>} />}
         {currentUrl=="/studentdashboard/profile" && <Route exact path="/studentdashboard/profile" component={Profile} />}
         {currentUrl=="/studentdashboard/viewclass" && <Route exact path="/studentdashboard/viewclass" component={ViewClass} />}
         {currentUrl=="/studentdashboard/qrcode" && <Route exact path="/studentdashboard/qrcode" component={MyQRCode} />}

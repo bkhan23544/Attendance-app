@@ -59,7 +59,9 @@ function formatDate(date) {
 app.post("/createuser", (req, res) => {
     const { userData } = req.body
     if (userData.accounttype == "Student") {
-        connection.query((`INSERT INTO students(userid,firstName,lastName,rollNo,programName,email,accounttype,profilePic,approved,disabled) VALUES("${userData.userid}","${userData.firstName}","${userData.lastName}","${userData.rollNo}","${userData.programName}","${userData.email}","${userData.accounttype}","${userData.profilePic}",${userData.approved},${userData.disabled})`), (err, results) => {
+        var sql = `INSERT INTO students(userid,firstName,lastName,rollNo,programName,email,accounttype,profilePic,approved,disabled) VALUES(?,?,?,?,?,?,?,?,?,?)`
+        var sqlData = [userData.userid,userData.firstName,userData.lastName,userData.rollNo,userData.programName,userData.email,userData.accounttype,userData.profilePic,userData.approved,userData.disabled]
+        connection.query(sql,sqlData, (err, results) => {
             if (err) {
                 return res.send(err)
             }
@@ -70,7 +72,9 @@ app.post("/createuser", (req, res) => {
     }
 
     else if (userData.accounttype == "Lecturer") {
-        connection.query((`INSERT INTO lecturers(userid,firstName,lastName,regNo,email,accounttype,profilePic,approved,disabled) VALUES("${userData.userid}","${userData.firstName}","${userData.lastName}","${userData.regNo}","${userData.email}","${userData.accounttype}","${userData.profilePic}",${userData.approved},${userData.disabled})`), (err, results) => {
+        var sql = `INSERT INTO lecturers(userid,firstName,lastName,regNo,email,accounttype,profilePic,approved,disabled) VALUES(?,?,?,?,?,?,?,?,?)`
+        var sqlData = [userData.userid,userData.firstName,userData.lastName,userData.regNo,userData.email,userData.accounttype,userData.profilePic,userData.approved,userData.disabled]
+        connection.query(sql,sqlData, (err, results) => {
             if (err) {
                 return res.send(err)
             }
@@ -83,8 +87,8 @@ app.post("/createuser", (req, res) => {
 
 
 //Check If Roll No Or Registraction No Already Exists
-app.post("/checkexists", (req, res) => {
-    const { formData } = req.body
+app.get("/checkexists", (req, res) => {
+    const formData = req.query
     if (formData.accounttype == "Student") {
         connection.query((`SELECT * from students where rollNo=${formData.rollNo}`), (err, results) => {
             if (err) {
@@ -121,8 +125,8 @@ app.post("/checkexists", (req, res) => {
 
 
 //Check which type of user is logged in. Lecturer or Student
-app.post("/identifyuser", (req, res) => {
-    const userData = req.body
+app.get("/identifyuser", (req, res) => {
+    const userData = req.query
     connection.query((`SELECT * FROM lecturers WHERE userid="${userData.uid}"`), (err, results) => {
         if (err) {
             return res.send(err)
@@ -177,9 +181,9 @@ app.post("/createclass", (req, res) => {
 
 
 //Get all classes from database for lecturer or student or overseer
-app.post("/getallclasses", (req, res) => {
+app.get("/getallclasses", (req, res) => {
 
-    var { uid, accounttype, programName } = req.body
+    var { uid, accounttype, programName } = req.query
 
 
     if (accounttype == "student") {
@@ -226,7 +230,7 @@ app.post("/getallclasses", (req, res) => {
 //Get a specific class
 app.post("/getaclass", (req, res) => {
 
-    var { classID } = req.body
+    var {classID} = req.body
 
     connection.query((`SELECT * FROM classes WHERE classID="${classID}"`), (err, results) => {
         if (err) {
@@ -241,8 +245,8 @@ app.post("/getaclass", (req, res) => {
 })
 
 //check if a user exists or not
-app.post("/checkuser", (req, res) => {
-    var { accounttype, email } = req.body
+app.get("/checkuser", (req, res) => {
+    var { accounttype, email } = req.query
     connection.query((`SELECT * FROM ${accounttype} WHERE email="${email}"`), (err, results) => {
         if (err) {
             return res.send(err)
@@ -289,9 +293,9 @@ app.post("/addclassmessage", (req, res) => {
 
 
 //Get all messages of a specific class
-app.post("/getallclassmessages", (req, res) => {
+app.get("/getallclassmessages", (req, res) => {
 
-    var { classID } = req.body
+    var {classID} = req.query
 
     connection.query((`SELECT * FROM classmessages WHERE classID="${classID}"`), (err, results) => {
         if (err) {
@@ -375,7 +379,7 @@ app.post("/checkattendance", (req, res) => {
 
 
 //Get the attendance of the given date.
-app.post("/getattendance", (req, res) => {
+app.get("/getattendance", (req, res) => {
 
     var { classID, date } = req.body
     var tableName = "table" + classID + date
@@ -397,9 +401,9 @@ app.post("/getattendance", (req, res) => {
 
 
 //Get all messages from database of the given program
-app.post("/getmessages", (req, res) => {
+app.get("/getmessages", (req, res) => {
 
-    var { programName } = req.body
+    var { programName } = req.query
     connection.query((`SELECT * FROM chat WHERE programName='${programName}'`), (err, results) => {
         if (err) {
             return res.send(err.code)
@@ -412,7 +416,7 @@ app.post("/getmessages", (req, res) => {
 
 
 //Get all lecturers from database for overseer
-app.post("/getlecturers", (req, res) => {
+app.get("/getlecturers", (req, res) => {
     connection.query((`SELECT * FROM lecturers`), (err, results) => {
         if (err) {
             return res.send(err.code)
@@ -426,7 +430,7 @@ app.post("/getlecturers", (req, res) => {
 })
 
 //Get all students from database for overseer
-app.post("/getstudents", (req, res) => {
+app.get("/getstudents", (req, res) => {
     connection.query((`SELECT * FROM students`), (err, results) => {
         if (err) {
             return res.send(err.code)
@@ -441,8 +445,8 @@ app.post("/getstudents", (req, res) => {
 
 
 //Ger no of classes a lecturer has made
-app.post("/getnoofclasses", (req, res) => {
-    var { userid } = req.body
+app.get("/getnoofclasses", (req, res) => {
+    var { userid } = req.query
     connection.query((`SELECT * FROM classes where createdBy='${userid}'`), (err, results) => {
         if (err) {
             return res.send(err.code)
@@ -500,8 +504,8 @@ app.post("/sendalert", (req, res) => {
 
 
 //Get alerts from database
-app.post("/getalerts", (req, res) => {
-    var { accounttype } = req.body
+app.get("/getalerts", (req, res) => {
+    var { accounttype } = req.query
     connection.query((`SELECT * FROM alerts where alertFor='${accounttype}' OR alertFor="Both"`), (err, results) => {
         if (err) {
             return res.send(err.code)
@@ -531,8 +535,8 @@ app.post("/applyforlecturerleave", (req, res) => {
 
 
 //Get all lecturer leave requests
-app.post("/getlecturerleaves", (req, res) => {
-    var { userid } = req.body
+app.get("/getlecturerleaves", (req, res) => {
+    var { userid } = req.query
 
     let sql;
 
@@ -574,8 +578,8 @@ app.post("/changeattendancerequest", (req, res) => {
 
 
 //Get all attendance change requests
-app.post("/getattendancerequests", (req, res) => {
-    var { userid } = req.body
+app.get("/getattendancerequests", (req, res) => {
+    var { userid } = req.query
 
     let sql;
 

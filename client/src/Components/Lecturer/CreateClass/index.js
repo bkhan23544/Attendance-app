@@ -29,7 +29,7 @@ export default function SignInAsLecturer() {
       allErrors.push("Class Name Is Required")
     }
     else if (!formData.programName) {
-      allErrors.push("Program Name Is Required")
+      allErrors.push("Course Is Required")
     }
     else if (!formData.subjectName) {
       allErrors.push("Subject Is Required")
@@ -81,7 +81,7 @@ export default function SignInAsLecturer() {
       </div>
 
       <div className="form-group">
-        <label>Program Name</label>
+        <label>Course</label>
         <Input type="select" onChange={handleChange} defaultValue={formData.programName} name="programName" id="programName">
           <option>Software Engineering</option>
           <option>Mechanical Engineering</option>
@@ -108,7 +108,7 @@ export default function SignInAsLecturer() {
           </Alert>
         ))
       }
-      <Button type="submit" color="primary" block onClick={onSubmit}>Submit</Button>
+      <Button type="submit" color="warning" block onClick={onSubmit}>Submit</Button>
     </div>
   )
 }

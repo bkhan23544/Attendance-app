@@ -46,6 +46,10 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
     setCurrentUrl(url)
   })
 
+  const setUrl=()=>{
+    setCurrentUrl("/lecturerdashboard/viewclass")
+  }
+
   return (
     <Container
       fluid
@@ -53,9 +57,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
     >
       <Navbar toggleSidebar={toggleSidebar} navBarTitle={navBaarTitle} />
       <Switch>
-      {currentUrl=="/lecturerdashboard" && <Route exact path="/lecturerdashboard">
-          <AllClasses setCurrentUrl={()=>setCurrentUrl("/lecturerdashboard/viewclass")}/>
-          </Route>}
+      {currentUrl=="/lecturerdashboard" && <Route exact path="/lecturerdashboard" component={()=><AllClasses setUrl={setUrl}/>}/>}
       {currentUrl=="/lecturerdashboard/createclass" && <Route exact path="/lecturerdashboard/createclass" component={CreateClass} />}
         {currentUrl=="/lecturerdashboard/profile" && <Route exact path="/lecturerdashboard/profile" component={Profile} />}
         {currentUrl=="/lecturerdashboard/viewclass" && <Route exact path="/lecturerdashboard/viewclass" component={ViewClass} />}

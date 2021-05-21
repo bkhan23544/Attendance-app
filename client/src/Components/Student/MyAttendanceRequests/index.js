@@ -13,9 +13,8 @@ export default function LecturerLeaveRequest() {
 
     //Get all my attendance requests
     useEffect(() => {
-        axios.post('http://localhost:5000/getattendancerequests', {
-            userid: user.userid
-        })
+        const params = new URLSearchParams({userid: user.userid}).toString();
+        axios.get(`http://localhost:5000/getattendancerequests?${params}`)
             .then(function (response) {
                 if (componentMounted) {
                     setAlerts(response.data)

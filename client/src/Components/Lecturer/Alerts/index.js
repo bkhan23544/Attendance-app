@@ -12,9 +12,8 @@ export default function Alerts(props) {
 
     //Get all alerts from database
     useEffect(() => {
-        axios.post('http://localhost:5000/getalerts', {
-            accounttype: "Lecturers"
-        })
+        const params = new URLSearchParams({accounttype: "Lecturers"}).toString();
+        axios.get(`http://localhost:5000/getalerts?${params}`)
             .then(function (response) {
                 if (componentMounted) {
                     setAlerts(response.data)

@@ -19,7 +19,7 @@ export default function LecturerLeaveRequest() {
 
     //Get all lecturer leave requests
     const getlecturerleaves = () => {
-        axios.post('http://localhost:5000/getlecturerleaves')
+        axios.get('http://localhost:5000/getlecturerleaves')
             .then(function (response) {
                 if (componentMounted) {
                     setAlerts(response.data)
@@ -50,7 +50,7 @@ export default function LecturerLeaveRequest() {
                             <p>For <b>{Math.round((Date.parse(v.endDate) - Date.parse(v.startDate)) / 1000 / 60 / 60 / 24)} Days</b></p>
                             <p>From <b>{v.startDate.slice(0, 10)}</b> to <b>{v.endDate.slice(0, 10)}</b></p>
                             <p><b>Description:</b> {v.description}</p>
-                            {v.approved ? <p>Approved</p> : <Button color="primary" onClick={() => approveRequest(v.leaveId)}>Approve</Button>}
+                            {v.approved ? <p>Approved</p> : <Button color="warning" onClick={() => approveRequest(v.leaveId)}>Approve</Button>}
                         </div>
                     )
                 })

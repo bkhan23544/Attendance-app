@@ -1,5 +1,5 @@
 .home-2-bg {
-    background-color: #090b0f;
+    background-color: #000 !important;
     position: relative;
     background-size: cover;
     height: 100%;
@@ -34,6 +34,14 @@
     left: 50%;
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
+    color:#FFC107 ;
+  
+}
+
+.loading{
+    height: 100%;
+    width: 100%;
+    background: #000;
 }
 
 .login-btn {

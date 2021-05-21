@@ -34,7 +34,8 @@ export default function SignInAsLecturer() {
     }, 5000);
   }
 
-  return (<>
+  return (
+  <div className="body">
 
     <div className="auth-inner">
       {emailSent ?
@@ -59,9 +60,9 @@ export default function SignInAsLecturer() {
               </Alert>
             ))
           }
-          <Button onClick={onSubmitEmail} type="submit" color="primary" block>Submit</Button>
+          <Button onClick={onSubmitEmail} type="submit" color="warning" block>Submit</Button>
         </>}
     </div>
-  </>
+  </div>
   )
 }

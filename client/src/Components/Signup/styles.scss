@@ -1,7 +1,7 @@
 
 
 body {
-  background: #1c8ef9 !important;
+  background: #000 !important;
   display: flex;
   font-weight: 400;
 }
@@ -32,7 +32,7 @@ body {
 
 .forgot-password {
   font-size: 16px;
-  color: #1c8ef9;
+  color: #FFC107;
   float: right;
   margin-top: 10px;
 }
@@ -45,8 +45,7 @@ body {
 }
 
 .upload-btn {
-  background-color: #1c8ef9;
-  color: white;
+  background-color: #FFC107;
   padding: 10px;
   border-radius: 4px;
   margin-top: 20px;

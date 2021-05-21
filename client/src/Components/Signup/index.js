@@ -73,7 +73,7 @@ export default function SignInAsLecturer() {
       allErrors.push("Roll No Is Required")
     }
     else if (formData.accounttype == "Student" && !formData.programName) {
-      allErrors.push("Program Name Is Required")
+      allErrors.push("Course Is Required")
     }
     else if (formData.accounttype == "Lecturer" && !formData.regNo) {
       allErrors.push("Registration No Is Required")
@@ -97,12 +97,9 @@ export default function SignInAsLecturer() {
 
   //Sign up and save user data to database
   const signUp = () => {
-    
-    axios.post('http://localhost:5000/checkexists', {
-      formData
-    })
+    const params = new URLSearchParams(formData).toString();
+    axios.get(`http://localhost:5000/checkexists?${params}`)
       .then(function (response) {
-        console.log(response.data,"res")
         if (response.data == "Roll No Exists") {
           var allErrors = []
           allErrors.push("Roll No Exists")
@@ -129,7 +126,6 @@ export default function SignInAsLecturer() {
                 userData
               })
                 .then(function (response) {
-                  console.log(response,"res")
                   if (response.data == "success") {
                     history.push("/")
                   }
@@ -196,7 +192,7 @@ export default function SignInAsLecturer() {
         </div>}
 
         {formData.accounttype === "Student" && <div className="form-group">
-          <label>Program Name</label>
+          <label>Course</label>
           <Input type="select" onChange={handleChange} defaultValue={formData.programName} name="programName" id="programName">
             <option>Software Engineering</option>
             <option>Mechanical Engineering</option>
@@ -239,7 +235,7 @@ export default function SignInAsLecturer() {
             </Alert>
           ))
         }
-        <Button className="mt-4" onClick={onSubmit} type="submit" color="primary" block>Submit</Button>
+        <Button className="mt-4" onClick={onSubmit} type="submit" color="warning" block>Submit</Button>
       </div>
     </div>
   )

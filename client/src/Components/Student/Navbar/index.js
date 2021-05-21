@@ -21,15 +21,12 @@ const Topbar = ({ toggleSidebar, navBarTitle }) => {
 
   return (
     <Navbar
-      color="primary"
+      color="warning"
       light
       className="navbar shadow-sm p-3 mb-5 rounded"
       expand="sm"
     >
-      <Button color="light" onClick={toggleSidebar}>
-        <FontAwesomeIcon icon={faAlignLeft} />
-      </Button>
-      <div className="w-100 text-center text-white">
+      <div className="w-100 text-center">
         <h3>{navBarTitle}</h3>
       </div>
     </Navbar>

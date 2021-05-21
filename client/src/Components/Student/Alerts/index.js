@@ -11,9 +11,8 @@ export default function Alerts() {
 
     //Get alerts meant for students from database
     useEffect(() => {
-        axios.post('http://localhost:5000/getalerts', {
-            accounttype: "Students"
-        })
+        const params = new URLSearchParams({accounttype: "Students"}).toString();
+        axios.get(`http://localhost:5000/getalerts?${params}`)
             .then(function (response) {
                 if (componentMounted) {
                     setAlerts(response.data)

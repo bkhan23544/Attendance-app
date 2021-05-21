@@ -44,6 +44,10 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
     setCurrentUrl(url)
   })
 
+  const setUrl=()=>{
+    setCurrentUrl("/overseerdashboard/viewclass")
+  }
+
   return (
     <Container
       fluid
@@ -51,9 +55,7 @@ const Content = ({ sidebarIsOpen, toggleSidebar, navBarTitle }) => {
     >
       <Navbar toggleSidebar={toggleSidebar} navBarTitle={navBaarTitle} />
       <Switch>
-      {currentUrl=="/overseerdashboard/allclasses" && <Route exact path="/overseerdashboard/allclasses">
-          <AllClasses setCurrentUrl={()=>setCurrentUrl("/overseerdashboard/viewclass")}/>
-          </Route>}
+        {currentUrl=="/overseerdashboard/allclasses" && <Route exact path="/overseerdashboard/allclasses" component={()=><AllClasses setUrl={setUrl}/>} />}
         {currentUrl=="/overseerdashboard/viewclass" && <Route exact path="/overseerdashboard/viewclass" component={ViewClass} />}
         {currentUrl=="/overseerdashboard" && <Route exact path="/overseerdashboard" component={AllLecturers} />}
         {currentUrl=="/overseerdashboard/allstudents" && <Route exact path="/overseerdashboard/allstudents" component={AllStudents} />}

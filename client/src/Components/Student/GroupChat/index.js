@@ -54,9 +54,8 @@ export default function GroupChat(props) {
 
   //Get messages from database
   const getMessages = () => {
-    axios.post('http://localhost:5000/getmessages', {
-      programName: user.programName
-    })
+    const params = new URLSearchParams({programName: user.programName}).toString();
+    axios.get(`http://localhost:5000/getmessages?${params}`)
       .then(function (response) {
         if (response.data.length > 0) {
           if (componentMounted) {
@@ -97,7 +96,7 @@ export default function GroupChat(props) {
                 {v.senderid === user.userid ? <div key={i} className="message-list me">
 
                   <div className="msg">
-                    <p className="text-right text-white">
+                    <p className="text-right">
                       {v.message}
                     </p>
                   </div>
@@ -126,7 +125,7 @@ export default function GroupChat(props) {
       </div>
       <div className="message-footer">
         <input value={message} type="text" onChange={(e) => { if (componentMounted) { setMessage(e.target.value) } }} data-placeholder="Send a message to {0}" />
-        <Button onClick={sendMessage} color="primary">Send</Button>
+        <Button onClick={sendMessage} color="warning">Send</Button>
       </div>
     </>
   )

@@ -14,7 +14,7 @@ export default function Dashboard() {
 
     return (
         <Router>
-            <div className="App wrapper root">
+            <div className="wrapper root">
                 <SideBar setNavbarTitle={setNavbarTitle} toggle={toggleSidebar} isOpen={sidebarIsOpen} />
                 <Content toggleSidebar={toggleSidebar} sidebarIsOpen={sidebarIsOpen} navBarTitle={navBarTitle} />
             </div>

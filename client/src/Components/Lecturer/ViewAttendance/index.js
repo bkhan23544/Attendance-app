@@ -24,10 +24,12 @@ export default function ViewAttendance({ showModal, toggle }) {
   const downloadAttendance = (date) => {
     if (date == "today") {
       var reqDate = formatDate(new Date())
-      axios.post('http://localhost:5000/getattendance', {
-        date: reqDate,
-        classID: currentClass.classId
-      })
+      const params = new URLSearchParams(
+        {
+          date: reqDate,
+          classID: currentClass.classId
+        }).toString();
+      axios.get(`http://localhost:5000/getattendance?${params}`)
         .then(function (response) {
           if (response.data == "ER_NO_SUCH_TABLE") {
             setError("Attendance for this date does not exists")
@@ -63,10 +65,12 @@ export default function ViewAttendance({ showModal, toggle }) {
     }
     else if (date == "date") {
       var reqDate = formatDate(startDate)
-      axios.post('http://localhost:5000/getattendance', {
-        date: reqDate,
-        classID: currentClass.classId
-      })
+      const params = new URLSearchParams(
+        {
+          date: reqDate,
+          classID: currentClass.classId
+        }).toString();
+      axios.get(`http://localhost:5000/getattendance?${params}`)
         .then(function (response) {
           if (response.data == "ER_NO_SUCH_TABLE") {
             setError("Attendance for this date does not exists")
@@ -136,7 +140,7 @@ export default function ViewAttendance({ showModal, toggle }) {
     <Modal size="lg" className="view-attendance-modal" isOpen={showModal} centered toggle={toggle}>
       <div className="m-3">
         <h3 className="text-center">View Attendance</h3>
-        <Button color="primary" block onClick={() => downloadAttendance("today")}>Download Today's Attendance</Button>
+        <Button color="warning" block onClick={() => downloadAttendance("today")}>Download Today's Attendance</Button>
         <p className="text-center mt-3">OR Choose a Date</p>
         <div className="row">
           <div className="m-auto">
@@ -144,7 +148,7 @@ export default function ViewAttendance({ showModal, toggle }) {
           </div>
         </div>
         {error && <Alert color="danger" className="mt-3">{error}</Alert>}
-        <Button color="primary" className="mt-3" block onClick={() => downloadAttendance("date")}>Download Attendance</Button>
+        <Button color="warning" className="mt-3" block onClick={() => downloadAttendance("date")}>Download Attendance</Button>
       </div>
     </Modal>
   )

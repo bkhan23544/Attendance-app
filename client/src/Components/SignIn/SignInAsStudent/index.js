@@ -60,11 +60,12 @@ export default function SignInAsStudent() {
 
   //Check if user exists and approved or not disabled and then login
   const signIn = () => {
-
-    axios.post('http://localhost:5000/checkuser', {
-      accounttype: "students",
-      email: formData.email
-    })
+    const params = new URLSearchParams(
+      {
+        accounttype: "students",
+        email: formData.email
+      }).toString();
+    axios.get(`http://localhost:5000/checkuser?${params}`)
       .then(function (response) {
         if (response.data == "exists") {
           firebase.auth().signInWithEmailAndPassword(formData.email, formData.password)
@@ -147,7 +148,7 @@ export default function SignInAsStudent() {
             </Alert>
           ))
         }
-        <Button type="submit" color="primary" block onClick={onSubmit}>Submit</Button>
+        <Button type="submit" color="warning" block onClick={onSubmit}>Submit</Button>
         <Link to="./forgotpassword" variant="body1" className="forgot-password">
           Forgot password?
               </Link>

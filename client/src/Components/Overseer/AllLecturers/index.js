@@ -16,14 +16,13 @@ export default function AllLecturers() {
 
     //Get all lecturers from database
     const getAllLecturers = () => {
-        axios.post('http://localhost:5000/getlecturers')
+        axios.get('http://localhost:5000/getlecturers')
             .then(function (response) {
                 if (response.data.length > 0) {
                     setLecturers([])
                     response.data.map((v, i) => {
-                        axios.post('http://localhost:5000/getnoofclasses', {
-                            userid: v.userid
-                        })
+                        const params = new URLSearchParams({userid: v.userid}).toString();
+                        axios.get(`http://localhost:5000/getnoofclasses?${params}`)
                             .then(function (classes) {
                                 v.noOfClasses = classes.data
                                 setLecturers((lecturers) => [
@@ -96,7 +95,7 @@ export default function AllLecturers() {
                                     <td>{v.lastName}</td>
                                     <td>{v.regNo}</td>
                                     <td>{v.email}</td>
-                                    <td>{v.approved ? "Approved" : <Button onClick={() => approveAccount(v.userid)} color="primary">Approve</Button>}</td>
+                                    <td>{v.approved ? "Approved" : <Button onClick={() => approveAccount(v.userid)} color="warning">Approve</Button>}</td>
                                     <td>{v.disabled ? <Button onClick={() => disableAccount(v.userid, 0)} color="success">Enable</Button> : <Button onClick={() => disableAccount(v.userid, 1)} color="danger">Disable</Button>}</td>
                                     <td>{v.noOfClasses}</td>
                                 </tr>

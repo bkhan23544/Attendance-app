@@ -16,7 +16,7 @@ export default function AllStudents() {
 
     //Get all students from database
     const getAllStudents = () => {
-        axios.post('http://localhost:5000/getstudents')
+        axios.get('http://localhost:5000/getstudents')
             .then(function (response) {
                 if (response.data.length > 0) {
                     console.log(response,"response")
@@ -68,7 +68,7 @@ export default function AllStudents() {
                             <th>First Name</th>
                             <th>Last Name</th>
                             <th>Roll No</th>
-                            <th>Department</th>
+                            <th>Programme</th>
                             <th>Email</th>
                             <th>Approval Status</th>
                             <th>Enabled</th>
@@ -86,7 +86,7 @@ export default function AllStudents() {
                                     <td>{v.rollNo}</td>
                                     <td>{v.programName}</td>
                                     <td>{v.email}</td>
-                                    <td>{v.approved ? "Approved" : <Button onClick={() => approveAccount(v.userid)} color="primary">Approve</Button>}</td>
+                                    <td>{v.approved ? "Approved" : <Button onClick={() => approveAccount(v.userid)} color="warning">Approve</Button>}</td>
                                     <td>{v.disabled ? <Button onClick={() => disableAccount(v.userid, 0)} color="success">Enable</Button> : <Button onClick={() => disableAccount(v.userid, 1)} color="danger">Disable</Button>}</td>
                                 </tr>
                             )
